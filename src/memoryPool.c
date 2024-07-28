@@ -4,11 +4,13 @@
 
 
 void initializeMetadata(struct MemoryPool *mp, size_t blockSize ){
-    size_t numBlocks = mp->poolsize/blockSize;
+    size_t numBlocks = mp->poolsize / blockSize;
     // current type = void, cant do byte opperations on it, need to cast to char for 1 byte
+    //
     char *currentPtr = (char *)mp->pool;
     
     // looping to create blocks inside pool
+    //
     for(int i =0;i<numBlocks;i++){
         struct MetaData *currentObj = (struct MetaData *)currentPtr;
         currentObj->size = blockSize;
@@ -32,8 +34,7 @@ void initializeMetadata(struct MemoryPool *mp, size_t blockSize ){
 }
 
 
-
-int initializePool(struct MemoryPool *mp, size_t size){
+int initializePool(struct MemoryPool *mp, size_t size, size_t blockSize){
     mp->pool = malloc(size);
     // checking if malloc failed
     if(mp->pool == NULL){
@@ -42,7 +43,19 @@ int initializePool(struct MemoryPool *mp, size_t size){
 
     }
     printf("memory allocated of size: %zu",size);
-    initializeMetadata(mp,512);
+    initializeMetadata(mp,blockSize);
     return 1;
 
 } 
+
+void clearPool(struct MemoryPool *mp){
+   if(mp->pool != NULL){
+       free(mp->pool);
+       mp->pool = NULL;
+   } 
+        
+}
+
+
+
+

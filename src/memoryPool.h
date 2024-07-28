@@ -5,7 +5,7 @@
  
 struct MemoryPool{
     void *pool;
-    size_t *poolsize;
+    size_t poolsize;
 
 
 };
@@ -17,7 +17,7 @@ struct MetaData{
     struct MetaData *back;
 
 };// Function to initialize the memory pool
-int initializePool(struct MemoryPool *mp, size_t size);
+int initializePool(struct MemoryPool *mp, size_t size, size_t blockSize);
 
 // Function to initialize metadata
 void initializeMetadata(struct MemoryPool *mp, size_t blockSize);
